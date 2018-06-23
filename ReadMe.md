@@ -40,4 +40,5 @@ For this to work you need all the tools installed.
 
 References:
 [Termux Remote Access](https://wiki.termux.com/wiki/Remote_Access#Installing_needed_packages)
+[Tutorial](https://glow.li/technology/2015/11/06/run-an-ssh-server-on-your-android-with-termux/)
 
