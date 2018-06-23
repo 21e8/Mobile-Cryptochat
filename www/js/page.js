@@ -43,12 +43,14 @@ const vm = new Vue ({
       this.socket.on('disconnect', () => this.addNotification('Lost Connection'))
 
       // Decrypt and display message when received
-      this.socket.on('MESSAGE', async (message) => {
+      this.socket.on('MESSAGE', (message) => {
         // Only decrypt messages that were encrypted with the user's public key
         if (message.recipient === this.originPublicKey) {
           // Decrypt the message text in the webworker thread
-          message.text = await this.getWebWorkerResponse('decrypt', message.text)
-          this.messages.push(message)
+          this.getWebWorkerResponse('decrypt', message.text).then((x) => {
+            message.text = x;
+            this.messages.push(message)
+          })
         }
       })
 
@@ -93,7 +95,7 @@ const vm = new Vue ({
     },
 
     /** Encrypt and emit the current draft message */
-    async sendMessage () {
+    sendMessage () {
       // Don't send message if there is nothing to send
       if (!this.draft || this.draft === '') { return }
 
@@ -112,12 +114,13 @@ const vm = new Vue ({
 
       if (this.destinationPublicKey) {
         // Encrypt message with the public key of the other user
-        const encryptedText = await this.getWebWorkerResponse(
-          'encrypt', [ message.get('text'), this.destinationPublicKey ])
-        const encryptedMsg = message.set('text', encryptedText)
-
-        // Emit the encrypted message
-        this.socket.emit('MESSAGE', encryptedMsg.toObject())
+        this.getWebWorkerResponse(
+          'encrypt', [ message.get('text'), this.destinationPublicKey ]).then((x) => {
+            const encryptedText = x;
+            const encryptedMsg = message.set('text', encryptedText)
+            // Emit the encrypted message
+            this.socket.emit('MESSAGE', encryptedMsg.toObject())
+          })
       }
     },
 
