@@ -33,11 +33,10 @@ For this to work you need all the tools installed.
 #HiddenServiceDir /usr/local/var/lib/tor/hidden_service/
 #HiddenServicePort 80 127.0.0.1:80
 ```
-=
 - Save and quit
 - run `tor`
 - If successful, open new termux session
-- `cat <HiddenServiceDir>/hostname` should outputt sth like this: `g3yv3tvqrbow7koz.onion`
+- `cat <HiddenServiceDir>/hostname` should output sth like this: `g3yv3tvqrbow7koz.onion`
 
 References:
 [Termux Remote Access](https://wiki.termux.com/wiki/Remote_Access#Installing_needed_packages)
