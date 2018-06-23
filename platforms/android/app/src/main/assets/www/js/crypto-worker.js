@@ -8,9 +8,9 @@ let privateKey = null
 
 /** Webworker onmessage listener */
 onmessage = function(e) {
-  const [ message_type, text, key ] = e.data
+  const [ messageType, messageId, text, key ] = e.data
   let result
-  switch (message_type) {
+  switch (messageType) {
     case 'generate-keys':
       result = generateKeypair()
       break
@@ -23,7 +23,7 @@ onmessage = function(e) {
   }
 
   // Return result to the UI thread
-  postMessage([ message_type, result ]);
+  postMessage([ messageId, result ])
 }
 
 /** Generate and store keypair */

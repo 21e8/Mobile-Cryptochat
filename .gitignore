@@ -58,3 +58,9 @@ typings/
 .env
 
 .DS_STORE
+
+# Cordova
+platforms/
+plugins/
+platforms/android/app/build/intermediates/res/merged/debug/drawable-land-xxhdpi_screen.png.flat
+*.flat
